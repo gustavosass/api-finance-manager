@@ -1,12 +1,13 @@
 package com.gustavosass.finance.controller;
 
-import com.gustavosass.finance.dtos.UserDto;
+import com.gustavosass.finance.dtos.RegisterUserDTO;
+import com.gustavosass.finance.dtos.UserDTO;
 import com.gustavosass.finance.mapper.UserMapper;
+import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.UserService;
-import org.apache.coyote.Response;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,16 +23,23 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    @SecurityRequirement(name = "Authorization")
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ResponseEntity<List<UserDto>> getAll(){
-        List<UserDto> usersDto = userService.getAll().stream().map(userMapper::toDto).collect(Collectors.toList());
+    public ResponseEntity<List<UserDTO>> getAll(){
+        List<UserDTO> usersDto = userService.getAll().stream().map(userMapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(usersDto);
     }
 
-    @GetMapping("/me")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> authenticatedUser() {
-        return ResponseEntity.ok().build();
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+        UserDTO userDto = userMapper.toDto(userService.findById(id));
+        return ResponseEntity.ok(userDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> create(@RequestBody RegisterUserDTO registerUserDto) {
+        User user = userMapper.toEntity(registerUserDto);
+        User userCreated = userService.create(user);
+        return ResponseEntity.ok(userMapper.toDto(userCreated));
     }
 }

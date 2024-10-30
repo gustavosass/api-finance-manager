@@ -1,10 +1,9 @@
 package com.gustavosass.finance.controller;
 
-import com.gustavosass.finance.dtos.LoginResponseDto;
-import com.gustavosass.finance.dtos.LoginUserDto;
-import com.gustavosass.finance.dtos.RegisterUserDto;
+import com.gustavosass.finance.dtos.LoginUserDTO;
+import com.gustavosass.finance.dtos.TokenDTO;
 import com.gustavosass.finance.model.User;
-import com.gustavosass.finance.security.AuthenticationService;
+import com.gustavosass.finance.service.AuthenticationService;
 import com.gustavosass.finance.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,23 +22,15 @@ public class AuthenticateController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
-
-        return ResponseEntity.ok(registeredUser);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    @PostMapping
+    public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto();
-        loginResponseDto.setToken(jwtToken);
-        loginResponseDto.setExpiresIn(jwtService.getExpirationTime());
-
-        return ResponseEntity.ok(loginResponseDto);
+        TokenDTO tokenDto = new TokenDTO();
+        tokenDto.setToken(jwtToken);
+        tokenDto.setExpiresIn(jwtService.getExpirationTime());
+        return ResponseEntity.ok(tokenDto);
     }
 }

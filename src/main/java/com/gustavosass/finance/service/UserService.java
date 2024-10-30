@@ -1,6 +1,5 @@
 package com.gustavosass.finance.service;
 
-import com.gustavosass.finance.model.Role;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,26 +20,39 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    public User findByUsername(String username){
-        return userRepository.findByUsername(username).orElseThrow(NoSuchElementException::new);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(NoSuchElementException::new);
+
     }
 
-    public User create(User user){
-        if (userRepository.existsByUsername(user.getUsername())){
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public User create(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "This username already exists.");
         }
-        Role role = roleService.findByName(user.getRole().getName());
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+    public User update(Long id, User user) {
+        Optional<User> userExists = userRepository.findById(id);
+
+        if (userExists.isPresent()) {
+            return userRepository.save(user);
+        }
+        throw new HttpClientErrorException(HttpStatus.NOT_MODIFIED, "Error updating user.");
+    }
+
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
