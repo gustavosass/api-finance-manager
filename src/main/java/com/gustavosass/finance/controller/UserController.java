@@ -23,7 +23,6 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @SecurityRequirement(name = "Authorization")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAll(){
         List<UserDTO> usersDto = userService.getAll().stream().map(userMapper::toDto).collect(Collectors.toList());
