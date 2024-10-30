@@ -9,6 +9,7 @@ Criação de uma API Rest para gerenciamento de finanças.
 - **Spring Boot 3**
 - **Spring Data JPA**
 - **OpenAPI (Swagger)**
+- **Lombok**
 - **PostgreSQL**
 - **Railway**
 
