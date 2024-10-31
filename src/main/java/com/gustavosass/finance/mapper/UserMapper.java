@@ -29,10 +29,6 @@ public class UserMapper {
     }
 
     public UserDTO toDto(User user){
-        /*UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setUsername(user.getUsername());
-        userDto.setRoles();*/
         return modelMapper.map(user, UserDTO.class);
     }
 

@@ -5,7 +5,6 @@ import com.gustavosass.finance.dtos.UserDTO;
 import com.gustavosass.finance.mapper.UserMapper;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.UserService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +39,18 @@ public class UserController {
         User user = userMapper.toEntity(registerUserDto);
         User userCreated = userService.create(user);
         return ResponseEntity.ok(userMapper.toDto(userCreated));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO userDto){
+        User user = userMapper.toEntity(userDto);
+        User userCreated = userService.update(id, user);
+        return ResponseEntity.ok(userMapper.toDto(userCreated));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

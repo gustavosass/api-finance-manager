@@ -48,9 +48,12 @@ public class UserService {
     }
 
     public User update(Long id, User user) {
+
         Optional<User> userExists = userRepository.findById(id);
 
         if (userExists.isPresent()) {
+            user.setId(userExists.get().getId());
+            user.setPassword(userExists.get().getPassword());
             return userRepository.save(user);
         }
         throw new HttpClientErrorException(HttpStatus.NOT_MODIFIED, "Error updating user.");
