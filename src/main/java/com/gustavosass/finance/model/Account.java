@@ -1,7 +1,7 @@
 package com.gustavosass.finance.model;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,8 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 @Entity
 public class Account {
 	
@@ -28,9 +32,10 @@ public class Account {
 	@Column(precision = 10, scale = 2)
 	private BigDecimal balance;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinTable(name = "accounts_users",
-				joinColumns = @JoinColumn(referencedColumnName = "id"),
-				inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
-	private List<User> users;
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "account_id"))
+	private Set<User> users;
+	
 }

@@ -4,6 +4,9 @@ import com.gustavosass.finance.dtos.LoginUserDTO;
 import com.gustavosass.finance.dtos.TokenDTO;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.AuthenticationService;
+
+import jakarta.validation.Valid;
+
 import com.gustavosass.finance.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +26,7 @@ public class AuthenticateController {
     private AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginUserDTO loginUserDto) {
+    public ResponseEntity<TokenDTO> authenticate(@RequestBody @Valid LoginUserDTO loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

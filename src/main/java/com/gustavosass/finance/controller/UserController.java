@@ -5,6 +5,9 @@ import com.gustavosass.finance.dtos.UserDTO;
 import com.gustavosass.finance.mapper.UserMapper;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +27,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAll(){
-        List<UserDTO> usersDto = userService.getAll().stream().map(userMapper::toDto).collect(Collectors.toList());
+        List<UserDTO> usersDto = userService.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(usersDto);
     }
 
@@ -35,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody RegisterUserDTO registerUserDto) {
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid RegisterUserDTO registerUserDto) {
         User user = userMapper.toEntity(registerUserDto);
         User userCreated = userService.create(user);
         return ResponseEntity.ok(userMapper.toDto(userCreated));
