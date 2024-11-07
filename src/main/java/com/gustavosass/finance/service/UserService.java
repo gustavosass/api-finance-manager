@@ -3,6 +3,7 @@ package com.gustavosass.finance.service;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found."));
 
     }
 
@@ -36,12 +37,12 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found."));
     }
 
     public User create(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
-            throw new HttpClientErrorException(HttpStatus.CONFLICT, "This username already exists.");
+            throw new DuplicateKeyException("This username already exists.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);

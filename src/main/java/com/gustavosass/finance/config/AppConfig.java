@@ -1,4 +1,4 @@
-package com.gustavosass.finance.controller.configs;
+package com.gustavosass.finance.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
