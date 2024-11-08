@@ -14,12 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @Entity
 public class Account {
 	
@@ -29,6 +25,9 @@ public class Account {
 	
 	private String name;
 	
+	/**
+	 * TODO Remove the balance field, the account value will be controlled in the transaction results.
+	 */
 	@Column(precision = 10, scale = 2)
 	private BigDecimal balance;
 	

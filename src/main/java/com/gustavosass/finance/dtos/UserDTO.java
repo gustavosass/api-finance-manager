@@ -1,6 +1,7 @@
 package com.gustavosass.finance.dtos;
 
 import com.gustavosass.finance.enums.RoleEnum;
+
 import lombok.*;
 
 import java.util.Date;
@@ -8,8 +9,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserDTO {
     private long id;
     private String fullName;

@@ -5,6 +5,8 @@ import com.gustavosass.finance.dtos.TokenDTO;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.AuthenticationService;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
 import com.gustavosass.finance.security.JwtService;

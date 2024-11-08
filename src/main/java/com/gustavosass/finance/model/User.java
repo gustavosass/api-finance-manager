@@ -15,10 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @EqualsAndHashCode(of = "id")
 @Entity(name = "users")
 public class User implements UserDetails, Serializable {
