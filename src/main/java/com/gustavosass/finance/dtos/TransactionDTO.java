@@ -1,10 +1,9 @@
 package com.gustavosass.finance.dtos;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
-
-import com.gustavosass.finance.enums.StatusEnum;
+import com.gustavosass.finance.enums.AccountingEntryTypeEnum;
+import com.gustavosass.finance.enums.PaymentStatusEnum;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +13,12 @@ import lombok.Setter;
 public class TransactionDTO {
 	
 	private long id;
-	private BigDecimal value;
-	private int installmentNumber; 
+	private Double value;
+	private int installmentNumbers; 
     private Date createdAt;
     private Date updatedAt;
     private AccountDTO account;
-    private StatusEnum status;
+    private PaymentStatusEnum status;
+    private AccountingEntryTypeEnum accountingEntryType;
     	
 }

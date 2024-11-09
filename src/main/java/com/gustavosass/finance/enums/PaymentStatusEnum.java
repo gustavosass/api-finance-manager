@@ -1,6 +1,6 @@
 package com.gustavosass.finance.enums;
 
-public enum StatusEnum {
+public enum PaymentStatusEnum {
 	PAID,
 	OPEN,
 	CANCELED

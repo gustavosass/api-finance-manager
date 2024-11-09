@@ -6,7 +6,6 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.gustavosass.finance.enums.AccountingEntryTypeEnum;
 import com.gustavosass.finance.enums.PaymentStatusEnum;
 
 import jakarta.persistence.Column;
@@ -21,7 +20,8 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Transaction implements Serializable {
+public class TransactionItem implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -31,8 +31,14 @@ public class Transaction implements Serializable {
 	@Column(precision = 2)
 	private Double value;
 	
-	private int installmentNumbers; 
+	@ManyToOne
+	private Transaction transaction;
 	
+	private int installmentNumber;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatusEnum status = PaymentStatusEnum.OPEN;
+
 	@CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
@@ -41,13 +47,4 @@ public class Transaction implements Serializable {
     @Column(name = "updated_at")
     private Date updatedAt;
 	
-    @ManyToOne
-    private Account account;
-    
-    @Enumerated(EnumType.STRING)
-    private PaymentStatusEnum status = PaymentStatusEnum.OPEN;
-    
-    @Enumerated(EnumType.STRING)
-    private AccountingEntryTypeEnum accountingEntryType;
-    	
 }

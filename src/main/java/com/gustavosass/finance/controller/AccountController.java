@@ -20,8 +20,11 @@ import com.gustavosass.finance.mapper.AccountMapper;
 import com.gustavosass.finance.model.Account;
 import com.gustavosass.finance.service.AccountService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/account")
+@Tag(name = "Account")
 public class AccountController {
 
 	@Autowired

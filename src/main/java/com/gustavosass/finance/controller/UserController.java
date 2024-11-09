@@ -6,6 +6,7 @@ import com.gustavosass.finance.mapper.UserMapper;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
+@Tag(name = "User")
 public class UserController {
 
     @Autowired

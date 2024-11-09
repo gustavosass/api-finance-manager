@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.gustavosass.finance.dtos.CreateTransactionDTO;
 import com.gustavosass.finance.dtos.TransactionDTO;
+import com.gustavosass.finance.dtos.UpdateTransactionDTO;
 import com.gustavosass.finance.model.Transaction;
 
 @Component
@@ -20,6 +21,10 @@ public class TransactionMapper {
 	
 	public Transaction toEntity(TransactionDTO transactionDTO) {
 		return modelMapper.map(transactionDTO, Transaction.class);
+	}
+	
+	public Transaction toEntity(UpdateTransactionDTO updateTransactionDTO) {
+		return modelMapper.map(updateTransactionDTO, Transaction.class);
 	}
 	
 	public Transaction toEntity(CreateTransactionDTO createTransactionDTO) {

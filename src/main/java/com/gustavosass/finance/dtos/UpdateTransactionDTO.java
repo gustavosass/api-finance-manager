@@ -9,14 +9,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateTransactionDTO {
-
-	@NotNull @Min(1)
-	private Double value;
-	@NotNull @Min(1)
-	private int installmentNumbers;
+public class UpdateTransactionDTO {
 	@NotNull
-	private AccountDTO account;
+	private long id;
+	@NotNull
+	@Min(1)
+	private Double value;
+	@NotNull
+	@Min(1)
+	private int installmentNumbers; 
+	@NotNull
+    private AccountDTO account;
 	@NotNull
     private AccountingEntryTypeEnum accountingEntryType;
 

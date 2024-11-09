@@ -41,7 +41,6 @@ public class AccountService {
 		Set<User> usersExists = account.getUsers().stream().map(user -> userService.findById(user.getId())).collect(Collectors.toSet());
 		accountExists.setName(account.getName());
 		accountExists.setUsers(usersExists);
-		accountExists.setBalance(account.getBalance());
 		return accountRepository.save(accountExists);
 	}
 	

@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gustavosass.finance.dtos.CreateTransactionDTO;
 import com.gustavosass.finance.dtos.TransactionDTO;
+import com.gustavosass.finance.dtos.UpdateTransactionDTO;
 import com.gustavosass.finance.mapper.TransactionMapper;
 import com.gustavosass.finance.model.Transaction;
 import com.gustavosass.finance.service.TransactionService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/transaction")
+@Tag(name = "Transaction")
 public class TransactionController {
 
 	@Autowired
@@ -46,15 +49,15 @@ public class TransactionController {
 	}
 
 	@PostMapping
-	public ResponseEntity<TransactionDTO> create(@RequestBody @Valid CreateTransactionDTO createTransactionDto) {
+	public ResponseEntity<TransactionDTO> create(@Valid @RequestBody CreateTransactionDTO createTransactionDto) {
 		Transaction transaction = transactionMapper.toEntity(createTransactionDto);
 		Transaction transactionCreated = transactionService.create(transaction);
 		return ResponseEntity.ok(transactionMapper.toDto(transactionCreated));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<TransactionDTO> update(@PathVariable Long id, @RequestBody TransactionDTO transactionDto) {
-		Transaction transaction = transactionMapper.toEntity(transactionDto);
+	public ResponseEntity<TransactionDTO> update(@PathVariable Long id, @Valid @RequestBody UpdateTransactionDTO updateTransactionDTO) {
+		Transaction transaction = transactionMapper.toEntity(updateTransactionDTO);
 		Transaction transactionExists = transactionService.update(id, transaction);
 		return ResponseEntity.ok(transactionMapper.toDto(transactionExists));
 	}

@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionPhase;
 
 import com.gustavosass.finance.model.Account;
 import com.gustavosass.finance.model.Transaction;
@@ -28,17 +29,18 @@ public class TransactionService {
 	}
 	
 	public Transaction create(Transaction transaction) {
-		Account account = accountService.findById(transaction.getId());
+		Account account = accountService.findById(transaction.getAccount().getId());
 		transaction.setAccount(account);
 		return  transactionRepository.save(transaction);
 	}
 	
 	public Transaction update(Long id, Transaction transaction) {
 		Transaction transactionExists = transactionRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Transaction not found."));
-		Account accountExists = accountService.findById(transaction.getId());
+		Account accountExists = accountService.findById(transaction.getAccount().getId());
 		transactionExists.setAccount(accountExists);
-		transactionExists.setStatus(transaction.getStatus());
-		transactionExists.setInstallmentNumber(transaction.getInstallmentNumber());
+		transactionExists.setInstallmentNumbers(transaction.getInstallmentNumbers());
+		transactionExists.setValue(transaction.getValue());
+		transactionExists.setAccountingEntryType(transaction.getAccountingEntryType());
 		return transactionRepository.save(transactionExists);
 	}
 	

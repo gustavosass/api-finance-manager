@@ -7,6 +7,7 @@ import com.gustavosass.finance.service.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import com.gustavosass.finance.security.JwtService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/authenticate")
+@Tag(name = "Authenticate")
 public class AuthenticateController {
 
     @Autowired

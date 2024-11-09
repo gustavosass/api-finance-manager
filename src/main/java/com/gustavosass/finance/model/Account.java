@@ -1,6 +1,6 @@
 package com.gustavosass.finance.model;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -17,19 +17,15 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Account {
-	
+public class Account implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
-	
-	/**
-	 * TODO Remove the balance field, the account value will be controlled in the transaction results.
-	 */
-	@Column(precision = 10, scale = 2)
-	private BigDecimal balance;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinTable(name = "accounts_users",
