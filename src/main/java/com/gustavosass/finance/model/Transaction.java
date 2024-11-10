@@ -22,32 +22,32 @@ import lombok.Data;
 @Data
 @Entity
 public class Transaction implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(precision = 2)
-	private Double value;
-	
-	private int installmentNumbers; 
-	
-	@CreationTimestamp
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(precision = 2)
+    private Double value;
+
+    private int installmentNumbers;
+
+    @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-	
+
     @ManyToOne
     private Account account;
-    
+
     @Enumerated(EnumType.STRING)
     private PaymentStatusEnum status = PaymentStatusEnum.OPEN;
-    
+
     @Enumerated(EnumType.STRING)
     private AccountingEntryTypeEnum accountingEntryType;
-    	
+
 }

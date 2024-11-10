@@ -20,31 +20,33 @@ import lombok.Data;
 
 @Data
 @Entity
-public class TransactionItem implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(precision = 2)
-	private Double value;
-	
-	@ManyToOne
-	private Transaction transaction;
-	
-	private int installmentNumber;
+public class TransactionItem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(precision = 2)
+    private Double value;
+
+    @ManyToOne
+    private Transaction transaction;
+
+    private int installmentNumber;
+
+    private Date datePayment;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatusEnum status = PaymentStatusEnum.OPEN;
 
-	@CreationTimestamp
+    @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-	
+
 }

@@ -1,4 +1,4 @@
-package com.gustavosass.finance.controller;
+package com.gustavosass.finance.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package com.gustavosass.finance.controller;
+package com.gustavosass.finance.controllers;
 
 import com.gustavosass.finance.dtos.RegisterUserDTO;
 import com.gustavosass.finance.dtos.UserDTO;

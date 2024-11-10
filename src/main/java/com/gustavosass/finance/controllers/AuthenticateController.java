@@ -1,12 +1,10 @@
-package com.gustavosass.finance.controller;
+package com.gustavosass.finance.controllers;
 
 import com.gustavosass.finance.dtos.LoginUserDTO;
 import com.gustavosass.finance.dtos.TokenDTO;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.AuthenticationService;
 
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 

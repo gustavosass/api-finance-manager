@@ -12,23 +12,23 @@ import com.gustavosass.finance.model.Transaction;
 @Component
 public class TransactionMapper {
 
-	@Autowired
-	private ModelMapper modelMapper;
-	
-	public TransactionDTO toDto(Transaction transaction) {
-		return modelMapper.map(transaction, TransactionDTO.class);
-	}
-	
-	public Transaction toEntity(TransactionDTO transactionDTO) {
-		return modelMapper.map(transactionDTO, Transaction.class);
-	}
-	
-	public Transaction toEntity(UpdateTransactionDTO updateTransactionDTO) {
-		return modelMapper.map(updateTransactionDTO, Transaction.class);
-	}
-	
-	public Transaction toEntity(CreateTransactionDTO createTransactionDTO) {
-		return modelMapper.map(createTransactionDTO, Transaction.class);
-	}
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public TransactionDTO toDto(Transaction transaction) {
+        return modelMapper.map(transaction, TransactionDTO.class);
+    }
+
+    public Transaction toEntity(TransactionDTO transactionDTO) {
+        return modelMapper.map(transactionDTO, Transaction.class);
+    }
+
+    public Transaction toEntity(UpdateTransactionDTO updateTransactionDTO) {
+        return modelMapper.map(updateTransactionDTO, Transaction.class);
+    }
+
+    public Transaction toEntity(CreateTransactionDTO createTransactionDTO) {
+        return modelMapper.map(createTransactionDTO, Transaction.class);
+    }
 
 }
