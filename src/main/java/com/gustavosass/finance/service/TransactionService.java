@@ -1,8 +1,15 @@
 package com.gustavosass.finance.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import com.gustavosass.finance.dtos.AccountDTO;
+import com.gustavosass.finance.enums.AccountingEntryTypeEnum;
+import com.gustavosass.finance.enums.PaymentStatusEnum;
+import com.gustavosass.finance.model.TransactionItem;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
@@ -15,7 +22,7 @@ import com.gustavosass.finance.repository.TransactionRepository;
 public class TransactionService {
 	
 	@Autowired
-	private TransactionRepository transactionRepository; 
+	private TransactionRepository transactionRepository;
 	
 	@Autowired
 	private AccountService accountService;
@@ -31,7 +38,7 @@ public class TransactionService {
 	public Transaction create(Transaction transaction) {
 		Account account = accountService.findById(transaction.getAccount().getId());
 		transaction.setAccount(account);
-		return  transactionRepository.save(transaction);
+		return transactionRepository.save(transaction);
 	}
 	
 	public Transaction update(Long id, Transaction transaction) {

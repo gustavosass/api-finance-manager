@@ -31,6 +31,8 @@ public class Transaction implements Serializable {
     @Column(precision = 2)
     private Double value;
 
+    private Date dueDate;
+
     private int installmentNumbers;
 
     @CreationTimestamp

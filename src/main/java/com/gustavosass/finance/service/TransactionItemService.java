@@ -27,10 +27,15 @@ public class TransactionItemService {
         return transactionItemRepository.findIdByTransactionIdAndId(idTransaction, id).orElseThrow(() -> new NoSuchElementException("Item not found."));
     }
 
-    public TransactionItem create(Long idTransaction, TransactionItem transactionItem) {
-        Transaction transaction = transactionService.findById(idTransaction);
-        transactionItem.setTransaction(transaction);
-        return transactionItemRepository.save(transactionItem);
+    public void create(Transaction transaction) {
+        Double valueInstallment = transaction.getValue()/transaction.getInstallmentNumbers();
+        for (int i=0;i<=transaction.getInstallmentNumbers();i++){
+            TransactionItem transactionItem = new TransactionItem();
+            transactionItem.setValue(valueInstallment);
+            transactionItem.setInstallmentNumber(i);
+            transactionItem.setTransaction(transaction);
+            transactionItemRepository.save(transactionItem);
+        }
     }
 
     public TransactionItem update(Long idTransaction, Long idItem, TransactionItem transactionItem) {

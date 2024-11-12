@@ -15,6 +15,7 @@ public class TransactionDTO {
 	private long id;
 	private Double value;
 	private int installmentNumbers;
+    private Date dueDate;
     private Date createdAt;
     private Date updatedAt;
     private AccountDTO account;

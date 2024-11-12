@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class UpdateTransactionDTO {
@@ -17,7 +19,7 @@ public class UpdateTransactionDTO {
 	private Double value;
 	@NotNull
 	@Min(1)
-	private int installmentNumbers; 
+	private int installmentNumbers;
 	@NotNull
     private AccountDTO account;
 	@NotNull

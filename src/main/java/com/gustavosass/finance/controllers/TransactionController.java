@@ -3,6 +3,7 @@ package com.gustavosass.finance.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.gustavosass.finance.service.TransactionItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,9 @@ public class TransactionController {
 	private TransactionService transactionService;
 
 	@Autowired
+	private TransactionItemService transactionItemService;
+
+	@Autowired
 	private TransactionMapper transactionMapper;
 
 	@GetMapping
@@ -52,6 +56,7 @@ public class TransactionController {
 	public ResponseEntity<TransactionDTO> create(@Valid @RequestBody CreateTransactionDTO createTransactionDto) {
 		Transaction transaction = transactionMapper.toEntity(createTransactionDto);
 		Transaction transactionCreated = transactionService.create(transaction);
+		transactionItemService.create(transactionCreated);
 		return ResponseEntity.ok(transactionMapper.toDto(transactionCreated));
 	}
 

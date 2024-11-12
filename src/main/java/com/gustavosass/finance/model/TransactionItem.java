@@ -34,6 +34,8 @@ public class TransactionItem implements Serializable {
     @ManyToOne
     private Transaction transaction;
 
+    private Date dueDate;
+
     private int installmentNumber;
 
     private Date datePayment;
