@@ -1,7 +1,5 @@
 package com.gustavosass.finance.service;
 
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.gustavosass.finance.enums.PaymentStatusEnum;
 import com.gustavosass.finance.model.Transaction;
 import com.gustavosass.finance.model.TransactionItem;
@@ -25,8 +23,8 @@ public class TransactionItemService {
         return transactionItemRepository.findAllByTransactionId(idTransaction);
     }
 
-    public TransactionItem findById(Long idTransaction, Long id) {
-        return transactionItemRepository.findIdByTransactionIdAndId(idTransaction, id).orElseThrow(() -> new NoSuchElementException("Item not found."));
+    public TransactionItem findById(Long idTransaction, Long idItem) {
+        return transactionItemRepository.findIdByTransactionIdAndId(idTransaction, idItem).orElseThrow(() -> new NoSuchElementException("Item not found."));
     }
 
     public void create(Transaction transaction) {
@@ -56,8 +54,8 @@ public class TransactionItemService {
         return transactionItemRepository.save(transactionItemExists);
     }
 
-    public void delete(Long idTransaction, Long id){
-        this.findById(idTransaction, id);
-        transactionItemRepository.deleteById(id);
+    public void delete(Long idTransaction, Long idItem){
+        this.findById(idTransaction, idItem);
+        transactionItemRepository.deleteById(idItem);
     }
 }

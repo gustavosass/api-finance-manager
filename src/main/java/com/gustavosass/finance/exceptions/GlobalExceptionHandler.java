@@ -15,6 +15,11 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(newExceptionResponse(throwable, webRequest), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(FoundItemsPaidForTransactionException.class)
+	public ResponseEntity<ExceptionResponse> handleFoundItemsPaidForTransactionException(FoundItemsPaidForTransactionException foundItemsPaidForTransactionException, WebRequest webRequest){
+		return new ResponseEntity<>(newExceptionResponse(foundItemsPaidForTransactionException, webRequest), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	private ExceptionResponse newExceptionResponse(Throwable throwable, WebRequest webRequest) {
 		return new ExceptionResponse(throwable.getMessage(), webRequest.getDescription(false));
 	}

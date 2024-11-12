@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import com.gustavosass.finance.dtos.AccountDTO;
 import com.gustavosass.finance.enums.AccountingEntryTypeEnum;
 import com.gustavosass.finance.enums.PaymentStatusEnum;
+import com.gustavosass.finance.exceptions.FoundItemsPaidForTransactionException;
 import com.gustavosass.finance.model.TransactionItem;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +46,10 @@ public class TransactionService {
 		Transaction transactionExists = transactionRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Transaction not found."));
 		Account accountExists = accountService.findById(transaction.getAccount().getId());
 		transactionExists.setAccount(accountExists);
+		System.out.println(transactionRepository.existsItemsPaidForTransaction(transactionExists.getId()));
+		if (transactionRepository.existsItemsPaidForTransaction(transactionExists.getId())){
+            throw new FoundItemsPaidForTransactionException("You haven't updated because you have paid items.");
+		}
 		transactionExists.setInstallmentNumbers(transaction.getInstallmentNumbers());
 		transactionExists.setValue(transaction.getValue());
 		transactionExists.setAccountingEntryType(transaction.getAccountingEntryType());

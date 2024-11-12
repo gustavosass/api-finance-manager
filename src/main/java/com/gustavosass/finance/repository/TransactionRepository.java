@@ -10,5 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-
+    @Query("SELECT (COUNT(t) > 0) FROM TransactionItem t where t.status = 'PAID' and t.transaction.id = ?1")
+    Boolean existsItemsPaidForTransaction(Long id);
 }
