@@ -1,5 +1,7 @@
 package com.gustavosass.finance.service;
 
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.gustavosass.finance.enums.PaymentStatusEnum;
 import com.gustavosass.finance.model.Transaction;
 import com.gustavosass.finance.model.TransactionItem;
@@ -29,10 +31,12 @@ public class TransactionItemService {
 
     public void create(Transaction transaction) {
         Double valueInstallment = transaction.getValue()/transaction.getInstallmentNumbers();
-        for (int i=0;i<=transaction.getInstallmentNumbers();i++){
+        for (int i=0;i<transaction.getInstallmentNumbers();i++){
+            System.out.println(i+1);
             TransactionItem transactionItem = new TransactionItem();
             transactionItem.setValue(valueInstallment);
-            transactionItem.setInstallmentNumber(i);
+            transactionItem.setDueDate(transaction.getDueDate());
+            transactionItem.setInstallmentNumber(i+1);
             transactionItem.setTransaction(transaction);
             transactionItemRepository.save(transactionItem);
         }
