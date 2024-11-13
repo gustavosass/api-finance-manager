@@ -35,9 +35,6 @@ public class TransactionController {
 	private TransactionService transactionService;
 
 	@Autowired
-	private TransactionItemService transactionItemService;
-
-	@Autowired
 	private TransactionMapper transactionMapper;
 
 	@GetMapping
@@ -56,7 +53,6 @@ public class TransactionController {
 	public ResponseEntity<TransactionDTO> create(@Valid @RequestBody CreateTransactionDTO createTransactionDto) {
 		Transaction transaction = transactionMapper.toEntity(createTransactionDto);
 		Transaction transactionCreated = transactionService.create(transaction);
-		transactionItemService.create(transactionCreated);
 		return ResponseEntity.ok(transactionMapper.toDto(transactionCreated));
 	}
 

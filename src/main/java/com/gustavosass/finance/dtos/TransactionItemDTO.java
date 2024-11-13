@@ -1,7 +1,6 @@
 package com.gustavosass.finance.dtos;
 
 import com.gustavosass.finance.enums.PaymentStatusEnum;
-import com.gustavosass.finance.model.Transaction;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ public class TransactionItemDTO {
 
     private long id;
     private Double value;
-    private Transaction transaction;
+    private TransactionDTO transactionDto;
     private Date dueDate;
     private int installmentNumber;
     private PaymentStatusEnum status;
