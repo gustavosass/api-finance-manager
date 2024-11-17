@@ -1,5 +1,6 @@
 package com.gustavosass.finance.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,6 +23,8 @@ import lombok.Data;
 @Data
 @Entity
 public class Transaction implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

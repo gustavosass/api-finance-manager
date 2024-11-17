@@ -2,7 +2,6 @@ package com.gustavosass.finance.model;
 
 import com.gustavosass.finance.enums.RoleEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,19 +9,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity(name = "users")
 public class User implements UserDetails, Serializable {
 
-	private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -46,6 +48,15 @@ public class User implements UserDetails, Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "roles")
     private Set<RoleEnum> roles = new HashSet<>();
+
+
+    public User(Long id, String fullName, String username, String password, Set<RoleEnum> roles) {
+        this.id = id;
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

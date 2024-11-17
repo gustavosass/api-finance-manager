@@ -3,13 +3,11 @@ package com.gustavosass.finance.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.gustavosass.finance.exceptions.FoundItemsPaidForTransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gustavosass.finance.model.Account;
 import com.gustavosass.finance.model.Transaction;
-import com.gustavosass.finance.model.TransactionItem;
 import com.gustavosass.finance.repository.TransactionRepository;
 
 @Service
@@ -34,19 +32,22 @@ public class TransactionService {
 	
 	public Transaction create(Transaction transaction) {
 		Account account = accountService.findById(transaction.getAccount().getId());
+
 		transaction.setAccount(account);
-		Transaction newTransaction = transactionRepository.save(transaction);
-		createTransactionsItems(transaction);
-		return newTransaction;
+		Transaction transactionCreated = transactionRepository.save(transaction);
+
+		transactionItemService.createTransactionsItems(transactionCreated);
+
+		return transactionCreated;
 	}
-	
+
 	public Transaction update(Long id, Transaction transaction) {
 		Transaction transactionExists = transactionRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Transaction not found."));
 		Account accountExists = accountService.findById(transaction.getAccount().getId());
-		
-		abortIfAnyItemsPaidForTransaction(transaction.getId());
+
+		transactionItemService.existsItemsPaidForTransaction(transaction.getId());
 		transactionItemService.findAllById(id).stream().forEach((item) -> transactionItemService.delete(id, item.getId()));
-		createTransactionsItems(transaction);
+		transactionItemService.createTransactionsItems(transaction);
 		
 		transactionExists.setAccount(accountExists);
 		transactionExists.setInstallmentNumbers(transaction.getInstallmentNumbers());
@@ -58,25 +59,7 @@ public class TransactionService {
 	
 	public void delete(Long id) {
 		transactionRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Transaction not found."));
-		abortIfAnyItemsPaidForTransaction(id);
+		transactionItemService.existsItemsPaidForTransaction(id);
 		transactionRepository.deleteById(id);
-	}
-	
-	private void createTransactionsItems(Transaction transaction){
-		Double valueInstallment = transaction.getValue()/transaction.getInstallmentNumbers();
-        for (int i=0;i<transaction.getInstallmentNumbers();i++){
-            TransactionItem transactionItem = new TransactionItem();
-            transactionItem.setValue(valueInstallment);
-            transactionItem.setDueDate(transaction.getDueDate());
-            transactionItem.setInstallmentNumber(i+1);
-            transactionItem.setTransaction(transaction);
-            transactionItemService.create(transactionItem);
-        }
-	}
-	
-	private void abortIfAnyItemsPaidForTransaction(Long idTransaction) {
-		if(transactionRepository.existsItemsPaidForTransaction(idTransaction)) {
-			throw new FoundItemsPaidForTransactionException("You haven't updated because you have paid items.");
-		}
 	}
 }

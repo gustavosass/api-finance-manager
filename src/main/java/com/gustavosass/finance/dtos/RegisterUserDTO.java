@@ -11,13 +11,13 @@ import java.util.Set;
 @Getter
 @Setter
 public class RegisterUserDTO {
-	
+
+    @NotNull
+    private String fullName;
 	@NotNull
     private String username;
 	@NotNull
     private String password;
-	@NotNull
-    private String fullName;
 	@NotNull
     private Set<RoleEnum> roles;
 }

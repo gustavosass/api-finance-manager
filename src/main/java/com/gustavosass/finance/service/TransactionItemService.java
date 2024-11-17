@@ -1,5 +1,7 @@
 package com.gustavosass.finance.service;
 
+import com.gustavosass.finance.exceptions.FoundItemsPaidForTransactionException;
+import com.gustavosass.finance.model.Transaction;
 import com.gustavosass.finance.model.TransactionItem;
 import com.gustavosass.finance.repository.TransactionItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,23 @@ public class TransactionItemService {
     public void delete(Long idTransaction, Long idItem){
         transactionItemRepository.deleteById(idItem);
     }
-    
+
+    public void existsItemsPaidForTransaction(Long idTransaction) {
+        if(transactionItemRepository.existsItemsPaidForTransaction(idTransaction)) {
+            throw new FoundItemsPaidForTransactionException("You haven't updated because you have paid items.");
+        }
+    }
+
+    public void createTransactionsItems(Transaction transaction){
+        Double valueInstallment = transaction.getValue()/transaction.getInstallmentNumbers();
+        for (int i=0;i<transaction.getInstallmentNumbers();i++){
+            TransactionItem transactionItem = new TransactionItem();
+            transactionItem.setValue(valueInstallment);
+            transactionItem.setDueDate(transaction.getDueDate());
+            transactionItem.setInstallmentNumber(i+1);
+            transactionItem.setTransaction(transaction);
+            this.create(transactionItem);
+        }
+    }
+
 }

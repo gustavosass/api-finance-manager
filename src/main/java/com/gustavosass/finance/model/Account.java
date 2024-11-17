@@ -1,5 +1,6 @@
 package com.gustavosass.finance.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -12,12 +13,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @Entity
 public class Account implements Serializable{
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id
