@@ -3,6 +3,7 @@ package com.gustavosass.finance.repository;
 import com.gustavosass.finance.enums.RoleEnum;
 import com.gustavosass.finance.model.User;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,31 +20,35 @@ public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    
+    private User user;
 
+    @BeforeEach
+    void setUp() {
+        this.user = new User(1L,"User", "user", "123", Set.of(RoleEnum.SUPER_ADMIN));
+        userRepository.save(user);
+    }
+    
     @Test
     @DisplayName("Found user in DB")
     void findByUsernameCase1() {
-        User userCreated = createUser();
-        Optional<User> foundedUser = userRepository.findByUsername(userCreated.getUsername());
+        Optional<User> foundedUser = userRepository.findByUsername(user.getUsername());
         Assertions.assertTrue(foundedUser.isPresent());
     }
+    
+    @Test
+    void existsByUsername() {
+    	Boolean userExists = userRepository.existsByUsername(user.getUsername());
+    	Assertions.assertTrue(userExists);
+    }
+
 
     @Test
     @DisplayName("Not found user in DB")
     void findByUsernameCase2() {
-        String username = "teste";
-        Optional<User> foundedUser = userRepository.findByUsername(username);
+        user.setUsername("teste");
+        Optional<User> foundedUser = userRepository.findByUsername(user.getUsername());
         Assertions.assertFalse(foundedUser.isPresent());
     }
-
-    private User createUser() {
-        User user = new User();
-        user.setFullName("Gustavo Sass");
-        user.setUsername("gustavo");
-        user.setPassword("gustavo");
-        user.setRoles(Set.of(RoleEnum.SUPER_ADMIN));
-        userRepository.save(user);
-        return user;
-    }
-
+    
 }

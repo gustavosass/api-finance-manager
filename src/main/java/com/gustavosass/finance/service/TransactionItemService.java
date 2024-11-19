@@ -1,6 +1,5 @@
 package com.gustavosass.finance.service;
 
-import com.gustavosass.finance.exceptions.FoundItemsPaidForTransactionException;
 import com.gustavosass.finance.model.Transaction;
 import com.gustavosass.finance.model.TransactionItem;
 import com.gustavosass.finance.repository.TransactionItemRepository;
@@ -15,6 +14,10 @@ public class TransactionItemService {
 
     @Autowired
     private TransactionItemRepository transactionItemRepository;
+    
+    public List<TransactionItem> listInstallmentsPaidByIdTransaction(Long idTransaction) {
+        return transactionItemRepository.listInstallmentsPaidByIdTransaction(idTransaction);
+    }
 
     public List<TransactionItem> findAllById(Long idTransaction) {
         return transactionItemRepository.findAllByTransactionId(idTransaction);
@@ -30,12 +33,6 @@ public class TransactionItemService {
 
     public void delete(Long idTransaction, Long idItem){
         transactionItemRepository.deleteById(idItem);
-    }
-
-    public void existsItemsPaidForTransaction(Long idTransaction) {
-        if(transactionItemRepository.existsItemsPaidForTransaction(idTransaction)) {
-            throw new FoundItemsPaidForTransactionException("You haven't updated because you have paid items.");
-        }
     }
 
     public void createTransactionsItems(Transaction transaction){

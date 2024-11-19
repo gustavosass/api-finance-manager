@@ -30,5 +30,10 @@ public class TransactionItemController {
     public ResponseEntity<TransactionItemDTO> findById(@PathVariable Long idTransaction, @PathVariable Long id){
         return ResponseEntity.ok(transactionItemMapper.toDto(transactionItemService.findById(idTransaction, id)));
     }
+    
+    @PostMapping("{idTransaction}/item/{id}/paid")
+    public ResponseEntity<TransactionItemDTO> paidInstallment(@PathVariable Long idTransaction, @PathVariable Long id){
+        return ResponseEntity.ok(transactionItemMapper.toDto(transactionItemService.findById(idTransaction, id)));
+    }
 
 }

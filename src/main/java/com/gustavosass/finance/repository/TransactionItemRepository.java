@@ -15,6 +15,6 @@ public interface TransactionItemRepository extends JpaRepository<TransactionItem
 
     Optional<TransactionItem> findIdByTransactionIdAndId(Long idTransaction, Long id);
 
-    @Query("SELECT (COUNT(t) > 0) FROM TransactionItem t where t.status = 'PAID' and t.transaction.id = ?1")
-    Boolean existsItemsPaidForTransaction(Long id);
+    @Query("SELECT t FROM TransactionItem t where t.status = 'PAID' and t.transaction.id = ?1")
+    List<TransactionItem> listInstallmentsPaidByIdTransaction(Long id);
 }

@@ -20,12 +20,7 @@ public class UserMapper {
     }
 
     public User toEntity(RegisterUserDTO registerUserDto){
-        User user = new User();
-        user.setFullName(registerUserDto.getFullName());
-        user.setUsername(registerUserDto.getUsername());
-        user.setPassword(registerUserDto.getPassword());
-        user.setRoles(registerUserDto.getRoles());
-        return user;
+        return modelMapper.map(registerUserDto, User.class);
     }
 
     public UserDTO toDto(User user){

@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(FoundItemsPaidForTransactionException.class)
 	public ResponseEntity<ExceptionResponse> handleFoundItemsPaidForTransactionException(FoundItemsPaidForTransactionException foundItemsPaidForTransactionException, WebRequest webRequest){
-		return new ResponseEntity<>(newExceptionResponse(foundItemsPaidForTransactionException, webRequest), HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(newExceptionResponse(foundItemsPaidForTransactionException, webRequest), HttpStatus.OK);
 	}
 
 	private ExceptionResponse newExceptionResponse(Throwable throwable, WebRequest webRequest) {
