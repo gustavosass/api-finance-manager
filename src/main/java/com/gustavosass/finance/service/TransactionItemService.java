@@ -1,50 +1,56 @@
 package com.gustavosass.finance.service;
 
-import com.gustavosass.finance.model.Transaction;
-import com.gustavosass.finance.model.TransactionItem;
-import com.gustavosass.finance.repository.TransactionItemRepository;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import com.gustavosass.finance.model.TransactionItem;
+import com.gustavosass.finance.repository.TransactionItemRepository;
 
 @Service
 public class TransactionItemService {
 
-    @Autowired
-    private TransactionItemRepository transactionItemRepository;
-    
-    public List<TransactionItem> listInstallmentsPaidByIdTransaction(Long idTransaction) {
-        return transactionItemRepository.listInstallmentsPaidByIdTransaction(idTransaction);
-    }
+	@Autowired
+	private TransactionItemRepository transactionItemRepository;
 
-    public List<TransactionItem> findAllById(Long idTransaction) {
-        return transactionItemRepository.findAllByTransactionId(idTransaction);
-    }
+	public boolean existsInstallmentsPaidByIdTransaction(Long id) {
+		return transactionItemRepository.existsInstallmentsPaidByIdTransaction(id);
+	}
 
-    public TransactionItem findById(Long idTransaction, Long idItem) {
-        return transactionItemRepository.findIdByTransactionIdAndId(idTransaction, idItem).orElseThrow(() -> new NoSuchElementException("Item not found."));
-    }
+	public List<TransactionItem> listInstallmentsPaidByIdTransaction(Long id) {
+		return transactionItemRepository.listInstallmentsPaidByTransactionId(id);
+	}
 
-    public TransactionItem create(TransactionItem transactionItem) {
-    	return transactionItemRepository.save(transactionItem);
-    }
+	public List<TransactionItem> findAllByTransactionId(Long id) {
+		return transactionItemRepository.findAllByTransactionId(id);
+	}
 
-    public void delete(Long idTransaction, Long idItem){
-        transactionItemRepository.deleteById(idItem);
-    }
+	public TransactionItem findById(Long id) {
+		return transactionItemRepository.findById(id)
+				.orElseThrow(() -> new NoSuchElementException("Item not found."));
+	}
 
-    public void createTransactionsItems(Transaction transaction){
-        Double valueInstallment = transaction.getValue()/transaction.getInstallmentNumbers();
-        for (int i=0;i<transaction.getInstallmentNumbers();i++){
-            TransactionItem transactionItem = new TransactionItem();
-            transactionItem.setValue(valueInstallment);
-            transactionItem.setDueDate(transaction.getDueDate());
-            transactionItem.setInstallmentNumber(i+1);
-            transactionItem.setTransaction(transaction);
-            this.create(transactionItem);
-        }
-    }
+	public TransactionItem create(TransactionItem item) {
+		return transactionItemRepository.save(item);
+	}
+
+	public TransactionItem update(Long id, TransactionItem item) {
+
+		TransactionItem transactionExists = transactionItemRepository.findById(id)
+				.orElseThrow(() -> new NoSuchElementException("Item not found."));
+
+		transactionExists.setDatePayment(item.getDatePayment());
+		transactionExists.setDueDate(item.getDueDate());
+		transactionExists.setStatus(item.getStatus());
+		transactionExists.setValue(item.getValue());
+
+		return transactionItemRepository.save(item);
+	}
+
+	public void delete(Long id) {
+		transactionItemRepository.deleteById(id);
+	}
 
 }

@@ -19,7 +19,22 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ExceptionResponse> handleFoundItemsPaidForTransactionException(FoundItemsPaidForTransactionException foundItemsPaidForTransactionException, WebRequest webRequest){
 		return new ResponseEntity<>(newExceptionResponse(foundItemsPaidForTransactionException, webRequest), HttpStatus.OK);
 	}
-
+	
+	@ExceptionHandler(NullArgumentException.class)
+	public ResponseEntity<ExceptionResponse> handleNullArgumentException(NullArgumentException nullArgumentException, WebRequest webRequest){
+		return new ResponseEntity<>(newExceptionResponse(nullArgumentException, webRequest), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(ObjectAlreadyExistsException.class)
+	public ResponseEntity<ExceptionResponse> handleObjectAlreadyExistsException(ObjectAlreadyExistsException objectAlreadyExistsException, WebRequest webRequest){
+		return new ResponseEntity<>(newExceptionResponse(objectAlreadyExistsException, webRequest), HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(ObjectNotFoundException.class)
+	public ResponseEntity<ExceptionResponse> handleObjectAlreadyExistsException(ObjectNotFoundException objectNotFoundException, WebRequest webRequest){
+		return new ResponseEntity<>(newExceptionResponse(objectNotFoundException, webRequest), HttpStatus.NOT_FOUND);
+	}
+		
 	private ExceptionResponse newExceptionResponse(Throwable throwable, WebRequest webRequest) {
 		return new ExceptionResponse(throwable.getMessage(), webRequest.getDescription(false));
 	}

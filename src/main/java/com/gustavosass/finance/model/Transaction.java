@@ -48,7 +48,7 @@ public class Transaction implements Serializable {
     @ManyToOne
     private Account account;
     
-    @OneToMany(mappedBy = "transaction", cascade = CascadeType.DETACH, orphanRemoval = true)
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TransactionItem> items;
 
     @CreationTimestamp

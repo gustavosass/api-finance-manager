@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.query.JpaCountQueryCreator;
 import org.springframework.stereotype.Service;
 
 import com.gustavosass.finance.model.Account;

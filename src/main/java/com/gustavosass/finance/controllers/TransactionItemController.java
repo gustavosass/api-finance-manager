@@ -1,17 +1,22 @@
 package com.gustavosass.finance.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.gustavosass.finance.dtos.TransactionItemDTO;
 import com.gustavosass.finance.mapper.TransactionItemMapper;
 import com.gustavosass.finance.service.TransactionItemService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/transactionItem/")
 @Tag(name = "Transaction Item")
 public class TransactionItemController {
 
@@ -22,18 +27,13 @@ public class TransactionItemController {
     private TransactionItemMapper transactionItemMapper;
 
     @GetMapping("{idTransaction}/item")
-    public ResponseEntity<List<TransactionItemDTO>> findAllById(@PathVariable Long idTransaction){
-        return ResponseEntity.ok(transactionItemService.findAllById(idTransaction).stream().map(transactionItemMapper::toDto).toList());
+    public ResponseEntity<List<TransactionItemDTO>> findAllById(@PathVariable Long id){
+        return ResponseEntity.ok(transactionItemService.findAllByTransactionId(id).stream().map(transactionItemMapper::toDto).toList());
     }
 
-    @GetMapping("{idTransaction}/item/{id}")
-    public ResponseEntity<TransactionItemDTO> findById(@PathVariable Long idTransaction, @PathVariable Long id){
-        return ResponseEntity.ok(transactionItemMapper.toDto(transactionItemService.findById(idTransaction, id)));
-    }
-    
-    @PostMapping("{idTransaction}/item/{id}/paid")
-    public ResponseEntity<TransactionItemDTO> paidInstallment(@PathVariable Long idTransaction, @PathVariable Long id){
-        return ResponseEntity.ok(transactionItemMapper.toDto(transactionItemService.findById(idTransaction, id)));
+    @GetMapping("/{id}")
+    public ResponseEntity<TransactionItemDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok(transactionItemMapper.toDto(transactionItemService.findById(id)));
     }
 
 }
