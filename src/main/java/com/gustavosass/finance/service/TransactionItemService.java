@@ -1,11 +1,11 @@
 package com.gustavosass.finance.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gustavosass.finance.exceptions.ObjectNotFoundException;
 import com.gustavosass.finance.model.TransactionItem;
 import com.gustavosass.finance.repository.TransactionItemRepository;
 
@@ -29,7 +29,7 @@ public class TransactionItemService {
 
 	public TransactionItem findById(Long id) {
 		return transactionItemRepository.findById(id)
-				.orElseThrow(() -> new NoSuchElementException("Item not found."));
+				.orElseThrow(() -> new ObjectNotFoundException("Item not found."));
 	}
 
 	public TransactionItem create(TransactionItem item) {
@@ -38,8 +38,7 @@ public class TransactionItemService {
 
 	public TransactionItem update(Long id, TransactionItem item) {
 
-		TransactionItem transactionExists = transactionItemRepository.findById(id)
-				.orElseThrow(() -> new NoSuchElementException("Item not found."));
+		TransactionItem transactionExists = findById(id);
 
 		transactionExists.setDatePayment(item.getDatePayment());
 		transactionExists.setDueDate(item.getDueDate());
@@ -50,6 +49,7 @@ public class TransactionItemService {
 	}
 
 	public void delete(Long id) {
+		findById(id);
 		transactionItemRepository.deleteById(id);
 	}
 
