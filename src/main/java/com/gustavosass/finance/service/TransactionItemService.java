@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gustavosass.finance.exceptions.NullArgumentException;
 import com.gustavosass.finance.exceptions.ObjectNotFoundException;
 import com.gustavosass.finance.model.TransactionItem;
 import com.gustavosass.finance.repository.TransactionItemRepository;
@@ -33,17 +34,20 @@ public class TransactionItemService {
 	}
 
 	public TransactionItem create(TransactionItem item) {
+		if (item == null) throw new NullArgumentException();
+
 		return transactionItemRepository.save(item);
 	}
 
 	public TransactionItem update(Long id, TransactionItem item) {
+		if (item == null) throw new NullArgumentException();
+		
+		TransactionItem itemExists = findById(id);
 
-		TransactionItem transactionExists = findById(id);
-
-		transactionExists.setDatePayment(item.getDatePayment());
-		transactionExists.setDueDate(item.getDueDate());
-		transactionExists.setStatus(item.getStatus());
-		transactionExists.setValue(item.getValue());
+		itemExists.setDatePayment(item.getDatePayment());
+		itemExists.setDueDate(item.getDueDate());
+		itemExists.setStatus(item.getStatus());
+		itemExists.setValue(item.getValue());
 
 		return transactionItemRepository.save(item);
 	}
