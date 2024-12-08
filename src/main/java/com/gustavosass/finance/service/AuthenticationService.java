@@ -16,14 +16,15 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public User authenticate(LoginUserDTO input) {
+    public User authenticate(LoginUserDTO loginUserDto) {
+    	
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getUsername(),
-                        input.getPassword()
+                		loginUserDto.getUsername(),
+                		loginUserDto.getPassword()
                 )
         );
 
-        return userService.findByUsername(input.getUsername());
+        return userService.findByUsername(loginUserDto.getUsername());
     }
 }
