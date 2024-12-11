@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.gustavosass.finance.enums.RoleEnum;
 import com.gustavosass.finance.exceptions.NullArgumentException;
 import com.gustavosass.finance.exceptions.ObjectNotFoundException;
 import com.gustavosass.finance.model.Account;
@@ -48,7 +47,7 @@ class AccountServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-        this.user = new User(1L,"User", "user", "123", Set.of(RoleEnum.SUPER_ADMIN));
+        this.user = new User(1L,"User", "user", "123");
         this.account = new Account(1L, "Mock Account", Set.of(user));
 	}
 

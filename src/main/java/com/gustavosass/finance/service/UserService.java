@@ -17,9 +17,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -39,8 +36,6 @@ public class UserService {
     public User create(User user) {
     	if (existsByUsername(user.getUsername())) throw new ObjectAlreadyExistsException("This username already exists.");
     	
-        
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -51,7 +46,6 @@ public class UserService {
         validateChangeUsername(user, userExists);
         
     	userExists.setFullName(user.getFullName());
-    	userExists.setRoles(user.getRoles());
     	userExists.setUsername(user.getUsername());
         return userRepository.save(userExists);
     }

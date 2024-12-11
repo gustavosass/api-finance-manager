@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.gustavosass.finance.enums.RoleEnum;
 import com.gustavosass.finance.exceptions.ObjectAlreadyExistsException;
 import com.gustavosass.finance.exceptions.ObjectNotFoundException;
 import com.gustavosass.finance.model.User;
@@ -42,7 +40,7 @@ class UserServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-        this.user = new User(1L, "User", "user", "123", Set.of(RoleEnum.SUPER_ADMIN));
+        this.user = new User(1L, "User", "user", "123");
 	}
 
 	@Test
@@ -124,9 +122,6 @@ class UserServiceTest {
 		
 		User entity = userService.create(user);
 	
-		String encodedPassword = passwordEncoder.encode(user.getPassword());
-		 
-		Assertions.assertEquals(encodedPassword, entity.getPassword());
 		Assertions.assertEquals(user, entity);
 		verify(userRepository, times(1)).save(any());
 	}
@@ -146,7 +141,7 @@ class UserServiceTest {
 
 	@Test
 	void testUpdate() {
-		User updatedUser = new User(2L, "Abc", "abc", "123", Set.of(RoleEnum.ADMIN));
+		User updatedUser = new User(2L, "Abc", "abc", "123");
 		
 		when(userRepository.findById(1L)).thenReturn(Optional.of(updatedUser));
 		when(userRepository.existsByUsername(user.getUsername())).thenReturn(false);
@@ -156,14 +151,13 @@ class UserServiceTest {
 		
 		Assertions.assertEquals(updatedUser.getFullName(), entity.getFullName());
 		Assertions.assertEquals(updatedUser.getUsername(), entity.getUsername());
-		Assertions.assertEquals(updatedUser.getRoles(), entity.getRoles());
 		
 		verify(userRepository, times(1)).save(any());
 	}
 	
 	@Test
 	void testExceptionForUpdateIfChangeExistUsername() {
-		User updatedUser = new User(2L, "Abc", "abc", "123", Set.of(RoleEnum.ADMIN));
+		User updatedUser = new User(2L, "Abc", "abc", "123");
 		
 		when(userRepository.findById(1L)).thenReturn(Optional.of(updatedUser));
 		when(userRepository.existsByUsername(user.getUsername())).thenReturn(true);

@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.gustavosass.finance.enums.AccountingEntryTypeEnum;
 import com.gustavosass.finance.enums.PaymentStatusEnum;
-import com.gustavosass.finance.enums.RoleEnum;
 import com.gustavosass.finance.model.Account;
 import com.gustavosass.finance.model.Transaction;
 import com.gustavosass.finance.model.TransactionItem;
@@ -39,7 +38,7 @@ class TransactionItemRepositoryTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		User user = new User(1L, "User", "user", "123", Set.of(RoleEnum.SUPER_ADMIN));
+		User user = new User(1L, "User", "user", "123");
 		User createdUser = userRepository.save(user);
 
 		Account account = new Account(1L, "Mock Account", Set.of(createdUser));

@@ -21,7 +21,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.gustavosass.finance.enums.AccountingEntryTypeEnum;
 import com.gustavosass.finance.enums.PaymentStatusEnum;
-import com.gustavosass.finance.enums.RoleEnum;
 import com.gustavosass.finance.exceptions.NullArgumentException;
 import com.gustavosass.finance.exceptions.ObjectNotFoundException;
 import com.gustavosass.finance.model.Account;
@@ -45,7 +44,7 @@ class TransactionItemServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-		User user = new User(1L, "User", "user", "123", Set.of(RoleEnum.SUPER_ADMIN));
+		User user = new User(1L, "User", "user", "123");
 		Account account = new Account(1L, "Mock Account", Set.of(user));
 		this.transaction = new Transaction(1L, 200.00, new Date(), 2, account, null, new Date(), new Date(),
 				PaymentStatusEnum.OPEN, AccountingEntryTypeEnum.DEBIT);

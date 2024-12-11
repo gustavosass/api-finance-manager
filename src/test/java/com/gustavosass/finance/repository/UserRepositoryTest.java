@@ -1,7 +1,6 @@
 package com.gustavosass.finance.repository;
 
 import java.util.Optional;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.gustavosass.finance.enums.RoleEnum;
 import com.gustavosass.finance.model.User;
 
 
@@ -26,7 +24,7 @@ public class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        this.user = new User(1L,"User", "user", "123", Set.of(RoleEnum.SUPER_ADMIN));
+        this.user = new User(1L,"User", "user", "123");
         userRepository.save(user);
     }
 
