@@ -1,6 +1,8 @@
 package com.gustavosass.finance.repository;
 
+import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,44 +14,40 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.gustavosass.finance.model.User;
 
-
 @DataJpaTest
 @ActiveProfiles("test")
 public class UserRepositoryTest {
 
-    @Autowired
-    private UserRepository userRepository;
-    
-    private User user;
+	@Autowired
+	private UserRepository userRepository;
 
-    @BeforeEach
-    void setUp() {
-        this.user = new User(1L,"User", "user", "123");
-        userRepository.save(user);
-    }
+	private User user;
 
-    @Test
-    @DisplayName("Found user in DB")
-    void findByUsernameCase1() {
-        Optional<User> foundedUser = userRepository.findByUsername(user.getUsername());
-        Assertions.assertTrue(foundedUser.isPresent());
-    }
-    
-    @Test
-    @DisplayName("Not found user in DB")
-    void findByUsernameCase2() {
-        user.setUsername("teste");
-        Optional<User> foundedUser = userRepository.findByUsername(user.getUsername());
-        Assertions.assertFalse(foundedUser.isPresent());
-    }
-    
-    
-    @Test
-    void existsByUsername() {
-    	Boolean userExists = userRepository.existsByUsername(user.getUsername());
-    	Assertions.assertTrue(userExists);
-    }
+	@BeforeEach
+	void setUp() {
+		this.user = new User(1L, "User", "user", "123", true, true, true, true, Set.of(), new Date(), new Date());
+		userRepository.save(user);
+	}
 
+	@Test
+	@DisplayName("Found user in DB")
+	void findByUsernameCase1() {
+		Optional<User> foundedUser = userRepository.findByUsername(user.getUsername());
+		Assertions.assertTrue(foundedUser.isPresent());
+	}
 
-    
+	@Test
+	@DisplayName("Not found user in DB")
+	void findByUsernameCase2() {
+		user.setUsername("teste");
+		Optional<User> foundedUser = userRepository.findByUsername(user.getUsername());
+		Assertions.assertFalse(foundedUser.isPresent());
+	}
+
+	@Test
+	void existsByUsername() {
+		Boolean userExists = userRepository.existsByUsername(user.getUsername());
+		Assertions.assertTrue(userExists);
+	}
+
 }

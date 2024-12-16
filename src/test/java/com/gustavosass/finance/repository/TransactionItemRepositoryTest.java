@@ -38,7 +38,7 @@ class TransactionItemRepositoryTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		User user = new User(1L, "User", "user", "123");
+		User user = new User(1L, "User", "user", "123", true, true, true, true, Set.of(), new Date(), new Date());
 		User createdUser = userRepository.save(user);
 
 		Account account = new Account(1L, "Mock Account", Set.of(createdUser));

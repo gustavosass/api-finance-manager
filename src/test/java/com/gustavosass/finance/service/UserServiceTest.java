@@ -6,8 +6,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +42,8 @@ class UserServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-        this.user = new User(1L, "User", "user", "123");
+        this.user = new User(1L, "User", "user", "123", true, true, true, true, Set.of(), new Date(), new Date());
+
 	}
 
 	@Test
@@ -141,7 +144,8 @@ class UserServiceTest {
 
 	@Test
 	void testUpdate() {
-		User updatedUser = new User(2L, "Abc", "abc", "123");
+		User updatedUser = new User(2L, "Abc", "abc", "123", true, true, true, true, Set.of(), new Date(), new Date());
+
 		
 		when(userRepository.findById(1L)).thenReturn(Optional.of(updatedUser));
 		when(userRepository.existsByUsername(user.getUsername())).thenReturn(false);
@@ -157,7 +161,7 @@ class UserServiceTest {
 	
 	@Test
 	void testExceptionForUpdateIfChangeExistUsername() {
-		User updatedUser = new User(2L, "Abc", "abc", "123");
+		User updatedUser = new User(2L, "Abc", "abc", "123", true, true, true, true, Set.of(), new Date(), new Date());
 		
 		when(userRepository.findById(1L)).thenReturn(Optional.of(updatedUser));
 		when(userRepository.existsByUsername(user.getUsername())).thenReturn(true);

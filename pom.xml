@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.gustavosass</groupId>
-	<artifactId>finance</artifactId>
+	<artifactId>api-finance-manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>finance</name>
+	<name>api-finance-manager</name>
 	<description>Projeto para desenvolvimento de um gerenciador de finanças pessoal.</description>
 	<url/>
 	<licenses>
@@ -33,7 +33,6 @@
 		<dependency>
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-validation</artifactId>
-    		<version>3.3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -43,6 +42,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-resource-server -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -64,7 +64,6 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -85,7 +84,6 @@
 		<dependency>
 	    	<groupId>org.flywaydb</groupId>
 	    	<artifactId>flyway-database-postgresql</artifactId>
-	    	<version>11.0.1</version>
 	    	<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -100,7 +98,13 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- JWT -->
+		<!--ModelMapper-->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<!-- JWT-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -116,14 +120,6 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
-		<!--ModelMapper-->
-		<dependency>
-			<groupId>org.modelmapper</groupId>
-			<artifactId>modelmapper</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>

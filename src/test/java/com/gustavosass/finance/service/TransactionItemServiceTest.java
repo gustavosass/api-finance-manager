@@ -44,7 +44,7 @@ class TransactionItemServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-		User user = new User(1L, "User", "user", "123");
+		User user = new User(1L, "User", "user", "123", true, true, true, true, Set.of(), new Date(), new Date());
 		Account account = new Account(1L, "Mock Account", Set.of(user));
 		this.transaction = new Transaction(1L, 200.00, new Date(), 2, account, null, new Date(), new Date(),
 				PaymentStatusEnum.OPEN, AccountingEntryTypeEnum.DEBIT);

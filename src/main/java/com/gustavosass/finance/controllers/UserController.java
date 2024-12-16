@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gustavosass.finance.dtos.RegisterUserDTO;
+import com.gustavosass.finance.dtos.CreateUserDTO;
 import com.gustavosass.finance.dtos.UserDTO;
 import com.gustavosass.finance.mapper.UserMapper;
 import com.gustavosass.finance.model.User;
 import com.gustavosass.finance.service.UserService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
@@ -45,10 +45,11 @@ public class UserController {
         UserDTO userDto = userMapper.toDto(userService.findById(id));
         return ResponseEntity.ok(userDto);
     }
-
+    
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody @Valid RegisterUserDTO registerUserDto) {
-        User user = userMapper.toEntity(registerUserDto);
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    public ResponseEntity<UserDTO> create(@RequestBody CreateUserDTO createUserDto) {
+        User user = userMapper.toEntity(createUserDto);
         User userCreated = userService.create(user);
         return ResponseEntity.ok(userMapper.toDto(userCreated));
     }

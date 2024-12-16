@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -47,7 +48,7 @@ class AccountServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-        this.user = new User(1L,"User", "user", "123");
+        this.user = new User(1L, "User", "user", "123", true, true, true, true, Set.of(), new Date(), new Date());
         this.account = new Account(1L, "Mock Account", Set.of(user));
 	}
 

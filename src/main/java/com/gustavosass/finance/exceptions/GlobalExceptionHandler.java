@@ -9,7 +9,6 @@ import org.springframework.web.context.request.WebRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	
 	@ExceptionHandler(Throwable.class)
 	public ResponseEntity<ExceptionResponse> handleAllExceptions(Throwable throwable, WebRequest webRequest) {
 		return new ResponseEntity<>(newExceptionResponse(throwable, webRequest), HttpStatus.INTERNAL_SERVER_ERROR);

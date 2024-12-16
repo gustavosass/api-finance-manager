@@ -54,7 +54,7 @@ class TransactionServiceTest {
     @BeforeEach
     void setup(){
         MockitoAnnotations.openMocks(this);
-        this.user = new User(1L,"User", "user", "123");
+        this.user = new User(1L, "User", "user", "123", true, true, true, true, Set.of(), new Date(), new Date());
         this.account = new Account(1L, "Mock Account", Set.of(user));
         this.transaction = new Transaction(1L, 200.00, new Date(), 2, account, null, new Date(), new Date(), PaymentStatusEnum.OPEN, AccountingEntryTypeEnum.DEBIT);
         this.transactionItems.add(new TransactionItem(1L, 100.00, transaction, new Date(), 1, null, PaymentStatusEnum.OPEN, new Date(), new Date()));
