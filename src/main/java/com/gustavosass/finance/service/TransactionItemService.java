@@ -23,6 +23,10 @@ public class TransactionItemService {
 	public List<TransactionItem> listInstallmentsPaidByIdTransaction(Long id) {
 		return transactionItemRepository.listInstallmentsPaidByTransactionId(id);
 	}
+	
+	public List<TransactionItem> findAll() {
+		return transactionItemRepository.findAll();
+	}
 
 	public List<TransactionItem> findAllByTransactionId(Long id) {
 		return transactionItemRepository.findAllByTransactionId(id);

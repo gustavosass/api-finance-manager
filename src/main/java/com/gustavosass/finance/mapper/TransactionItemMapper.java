@@ -1,5 +1,6 @@
 package com.gustavosass.finance.mapper;
 
+import com.gustavosass.finance.dtos.CreateTransactionItemDTO;
 import com.gustavosass.finance.dtos.TransactionItemDTO;
 import com.gustavosass.finance.model.TransactionItem;
 
@@ -23,6 +24,11 @@ public class TransactionItemMapper {
     public TransactionItem toEntity(TransactionItemDTO transactionItemDTO) {
     	modelMapper.typeMap(TransactionItemDTO.class, TransactionItem.class).addMapping(TransactionItemDTO::getTransactionDto, TransactionItem::setTransaction);
     	return modelMapper.map(transactionItemDTO, TransactionItem.class);        
+    }
+    
+    public TransactionItem toEntity(CreateTransactionItemDTO createTransactionItemDto) {
+    	modelMapper.typeMap(CreateTransactionItemDTO.class, TransactionItem.class).addMapping(CreateTransactionItemDTO::getTransaction, TransactionItem::setTransaction);
+    	return modelMapper.map(createTransactionItemDto, TransactionItem.class);        
     }
 
 }
